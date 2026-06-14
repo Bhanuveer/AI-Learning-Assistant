@@ -18,8 +18,17 @@ __pycache__/
 .coverage
 htmlcov/
 
-# Runtime uploads and local artifacts
-backend/uploads/
+
+# Generated Files
+backend/uploads/*
+backend/chunks/*
+backend/vector_store/*
+backend/exports/*
+
+!backend/uploads/.gitkeep
+!backend/chunks/.gitkeep
+!backend/vector_store/.gitkeep
+!backend/exports/.gitkeep
 
 # Secrets / environment config
 .env
@@ -29,3 +38,6 @@ backend/uploads/
 # Node
 node_modules/
 frontend/node_modules/
+
+# Build Files
+frontend/dist/

@@ -35,8 +35,28 @@ Question:
 Answer:
 """
 
-    response = llm.invoke(
-        prompt
-    )
+    try:
 
-    return response.content
+        response = llm.invoke(
+            prompt
+        )
+
+        return response.content
+
+    except Exception as e:
+
+        error = str(e)
+
+        if (
+            "rate_limit_exceeded"
+            in error
+        ):
+
+            return (
+                "⚠️ AI daily limit reached. "
+                "Please try again later."
+            )
+
+        return (
+            "⚠️ AI service temporarily unavailable."
+        )

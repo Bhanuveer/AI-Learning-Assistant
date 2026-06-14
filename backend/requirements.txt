@@ -45,6 +45,7 @@ orjson==3.11.9
 ormsgpack==1.12.2
 packaging==26.2
 passlib==1.7.4
+pillow==12.2.0
 pyasn1==0.6.3
 pydantic==2.13.4
 pydantic_core==2.46.4
@@ -56,6 +57,7 @@ python-jose==3.5.0
 python-multipart==0.0.32
 PyYAML==6.0.3
 regex==2026.5.9
+reportlab==4.5.1
 requests==2.34.2
 requests-toolbelt==1.0.0
 rich==15.0.0

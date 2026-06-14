@@ -29,8 +29,6 @@ def get_current_user(
         )
     )
 
-    print(payload)
-
     if not payload:
 
         raise HTTPException(

@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #0a0e1a;
+}
+
+/* ── Page Layout ── */
+.summary-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px 60px;
+    background:
+        radial-gradient(ellipse 65% 50% at 15% 10%, rgba(99, 102, 241, 0.14) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 45% at 85% 90%, rgba(139, 92, 246, 0.12) 0%, transparent 55%),
+        #0a0e1a;
+}
+
+.summary-card {
+    width: 100%;
+    max-width: 860px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 32px 40px 40px;
+    box-shadow:
+        0 0 0 1px rgba(99, 102, 241, 0.08),
+        0 32px 72px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    animation: fadeUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+    height: fit-content;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Back Button ── */
+.back-btn {
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 28px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.back-btn::before {
+    content: '←';
+    font-size: 15px;
+}
+
+.back-btn:hover {
+    background: rgba(99, 102, 241, 0.1);
+    color: #a5b4fc;
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+/* ── Header ── */
+.summary-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.7px;
+    background: linear-gradient(135deg, #a5b4fc 0%, #c4b5fd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 10px;
+}
+
+.summary-file {
+    text-align: center;
+    margin: 0 0 32px;
+}
+
+.summary-file span {
+    display: inline-block;
+    color: #6366f1;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* ── Content Box ── */
+.summary-content {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    padding: 28px 30px;
+    line-height: 1.85;
+    color: #cbd5e1;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    min-height: 180px;
+}
+
+/* ── Loading Skeleton Shimmer ── */
+.summary-loading {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.shimmer-line {
+    height: 14px;
+    border-radius: 8px;
+    background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0.04) 0%,
+        rgba(99, 102, 241, 0.12) 40%,
+        rgba(255,255,255,0.04) 80%
+    );
+    background-size: 300% 100%;
+    animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.shimmer-line:nth-child(1) { width: 100%; }
+.shimmer-line:nth-child(2) { width: 88%; }
+.shimmer-line:nth-child(3) { width: 95%; }
+.shimmer-line:nth-child(4) { width: 75%; }
+.shimmer-line:nth-child(5) { width: 90%; }
+.shimmer-line:nth-child(6) { width: 60%; }
+
+@keyframes shimmer {
+    0%   { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+}
+
+/* ── Markdown Typography ── */
+.summary-content h1,
+.summary-content h2,
+.summary-content h3 {
+    color: #a5b4fc;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin: 20px 0 8px;
+}
+
+.summary-content h1 { font-size: 20px; }
+.summary-content h2 { font-size: 17px; }
+.summary-content h3 { font-size: 15px; }
+
+.summary-content p {
+    color: #cbd5e1;
+    margin: 6px 0 12px;
+    line-height: 1.8;
+}
+
+.summary-content ul,
+.summary-content ol {
+    color: #cbd5e1;
+    padding-left: 22px;
+    margin: 6px 0 12px;
+}
+
+.summary-content li {
+    margin-bottom: 6px;
+    line-height: 1.7;
+}
+
+.summary-content strong {
+    color: #e2e8f0;
+    font-weight: 600;
+}
+
+.summary-content em {
+    color: #94a3b8;
+    font-style: italic;
+}
+
+.summary-content code {
+    background: rgba(99, 102, 241, 0.12);
+    color: #a5b4fc;
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: 13.5px;
+    font-family: 'Fira Code', ui-monospace, monospace;
+}
+
+.summary-content hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 20px 0;
+}
+.loading-label {
+    margin: 0 0 18px;
+    color: #a5b4fc;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}

@@ -1,3 +1,5 @@
+from fastapi import HTTPException
+
 from app.database.mongodb import db
 from app.utils.hash import (
     hash_password,
@@ -73,11 +75,10 @@ def login_user(user_data):
 
     if not user:
 
-        return {
-            "success": False,
-            "message":
-            "Invalid Credentials"
-        }
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid Credentials"
+        )
 
     is_valid = verify_password(
         user_data.password,
@@ -86,11 +87,10 @@ def login_user(user_data):
 
     if not is_valid:
 
-        return {
-            "success": False,
-            "message":
-            "Invalid Credentials"
-        }
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid Credentials"
+        )
 
     token = create_access_token(
         {
