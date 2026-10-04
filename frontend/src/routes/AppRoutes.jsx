@@ -13,6 +13,10 @@ import Summary from "../pages/Summary";
 import Notes from "../pages/Notes";
 import Quiz from "../pages/Quiz";
 import Analytics from "../pages/Analytics";
+import LearnerIntelligence from "../pages/LearnerIntelligence";
+import SkillGaps from "../pages/SkillGaps";
+import CareerRoadmap from "../pages/CareerRoadmap";
+import SkillEvidence from "../pages/SkillEvidence";
 
 function AppRoutes() {
 
@@ -82,6 +86,42 @@ function AppRoutes() {
                     element={
                         <ProtectedRoute>
                             <Analytics />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/intelligence"
+                    element={
+                        <ProtectedRoute>
+                            <LearnerIntelligence />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/skill-gaps"
+                    element={
+                        <ProtectedRoute>
+                            <SkillGaps />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/career"
+                    element={
+                        <ProtectedRoute>
+                            <CareerRoadmap />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/skill-evidence"
+                    element={
+                        <ProtectedRoute>
+                            <SkillEvidence />
                         </ProtectedRoute>
                     }
                 />

@@ -1,147 +1,69 @@
 import { useState } from "react";
-import "./Login.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AuthFrame from "../components/AuthFrame";
 import { loginUser } from "../services/authService";
-import { Link } from "react-router-dom";
 
 function Login() {
 
-    const [email, setEmail] =
-        useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const [busy, setBusy] = useState(false);
+    const navigate = useNavigate();
 
-    const [password, setPassword] =
-        useState("");
+    const handleLogin = async (event) => {
 
-    const [error, setError] =
-        useState("");
+        event.preventDefault();
+        setBusy(true);
+        setError("");
 
-    const navigate =
-        useNavigate();
+        try {
 
-    const handleLogin =
-        async () => {
+            const response = await loginUser({ email, password });
 
-            try {
-
-                const response =
-                    await loginUser({
-                        email,
-                        password
-                    });
-
-                if (
-                    response.access_token
-                ) {
-
-                    localStorage.setItem(
-                        "token",
-                        response.access_token
-                    );
-
-                    navigate(
-                        "/dashboard"
-                    );
-
-                } else {
-
-                    localStorage.removeItem(
-                        "token"
-                    );
-
-                    setError(
-                        "Invalid Credentials"
-                    );
-
-                }
-
-            } catch {
-
-                localStorage.removeItem(
-                    "token"
-                );
-
-                setError(
-                    "Invalid Credentials"
-                );
-
+            if (response.access_token) {
+                localStorage.setItem("token", response.access_token);
+                navigate("/dashboard");
+            } else {
+                localStorage.removeItem("token");
+                setError("Invalid credentials");
             }
 
-        };
+        } catch {
+
+            localStorage.removeItem("token");
+            setError("Invalid credentials");
+
+        } finally {
+
+            setBusy(false);
+
+        }
+    };
 
     return (
+        <AuthFrame>
+            <form onSubmit={handleLogin}>
+                <h2>Welcome back</h2>
+                <p className="li-muted">Log in to pick up where you left off.</p>
 
-        <div className="login-container">
+                <label htmlFor="email">Email</label>
+                <input id="email" className="li-input" type="email" autoComplete="email"
+                    value={email} onChange={(e) => setEmail(e.target.value)} required />
 
-            <div className="login-card">
+                <label htmlFor="password">Password</label>
+                <input id="password" className="li-input" type="password" autoComplete="current-password"
+                    value={password} onChange={(e) => setPassword(e.target.value)} required />
 
-                <h1>
-                    AI Learning Assistant
-                </h1>
+                {error && <p className="li-error li-mt-12">{error}</p>}
 
-                <input
-                    className="login-input"
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) =>
-                        setEmail(
-                            e.target.value
-                        )
-                    }
-                />
-
-                <input
-                    className="login-input"
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) =>
-                        setPassword(
-                            e.target.value
-                        )
-                    }
-                />
-
-                {
-                    error && (
-                        <p
-                            style={{
-                                color: "red"
-                            }}
-                        >
-                            {error}
-                        </p>
-                    )
-                }
-
-                <button
-                    className="login-btn"
-                    onClick={
-                        handleLogin
-                    }
-                >
-                    Login
+                <button className="li-btn" type="submit" disabled={busy}>
+                    {busy ? "Logging in…" : "Log in"}
                 </button>
 
-                <p
-                    style={{
-                        textAlign: "center",
-                        marginTop: "15px"
-                    }}
-                >
-                    Don't have an account?
-
-                    <Link
-                        to="/register"
-                    >
-                        Register
-                    </Link>
-                </p>
-
-            </div>
-
-        </div>
-
+                <p className="auth-alt">New here? <Link to="/register">Create an account</Link></p>
+            </form>
+        </AuthFrame>
     );
 }
 

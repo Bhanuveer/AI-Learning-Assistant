@@ -1,198 +1,121 @@
-import "./Chat.css";
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import StudyLayout from "../components/StudyLayout";
+import Icon from "../components/icons";
 import { askQuestion } from "../services/chatService";
-import { useNavigate } from "react-router-dom";
 
-function Chat() {
+const STARTERS = [
+    "Summarise the key ideas in this document",
+    "Which terms should I remember for an exam?",
+    "Give me a real-world example of the main concept"
+];
 
-    const fileName =
-        localStorage.getItem(
-            "selected_pdf"
-        );
+function ChatPane({ doc, draft, setDraft }) {
 
-    const [question,setQuestion] =useState("");
-    const [messages,setMessages] =useState([]);
-    const [loading,setLoading] =useState(false);    
-    const navigate = useNavigate();
-
+    const [messages, setMessages] = useState([]);
+    const [loading, setLoading] = useState(false);
     const bottomRef = useRef(null);
 
     useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages, loading]);
 
-        bottomRef.current?.scrollIntoView({
-            behavior: "smooth"
-        });
+    const ask = async (text) => {
 
-    }, [messages]);
+        const question = text.trim();
+        if (!question || loading) return;
 
-    const handleAsk =
-        async () => {
+        setDraft("");
+        setMessages((prev) => [...prev, { role: "user", content: question }]);
+        setLoading(true);
 
-            if (!question.trim())
-                return;
+        try {
 
-            try {
+            const response = await askQuestion(doc, question);
 
-                setLoading(true);
+            setMessages((prev) => [...prev, { role: "assistant", content: response.answer }]);
 
-                const response =
-                    await askQuestion(
-                        fileName,
-                        question
-                    );
+        } catch (error) {
 
-                setMessages(
-                    (prev) => [
+            setMessages((prev) => [
+                ...prev,
+                { role: "assistant", content: error?.response?.data?.detail || "Something went wrong" }
+            ]);
 
-                        ...prev,
+        } finally {
 
-                        {
-                            role: "user",
-                            content: question
-                        },
+            setLoading(false);
 
-                        {
-                            role: "assistant",
-                            content:
-                                response.answer
-                        }
-
-                    ]
-                );
-
-                setQuestion("");
-
-            } catch (error) {
-
-                setMessages(
-                    (prev) => [
-                        ...prev,
-                        {
-                            role: "assistant",
-                            content:
-                                error?.response?.data?.detail
-                                || "Something went wrong"
-                        }
-                    ]
-                );
-
-            } finally {
-
-                setLoading(false);
-
-            }
-
-        };
+        }
+    };
 
     return (
+        <div className="st-chat">
 
-        <div className="chat-container">
+            <div className="st-chat-scroll">
 
-            <div className="chat-card">
+                {messages.length === 0 && (
+                    <div className="st-welcome">
+                        <h2>Ask <span className="mark">{doc.replace(/\.pdf$/i, "")}</span> anything</h2>
+                        <p className="li-muted">
+                            Answers come only from this document, so you can trust where they came from.
+                        </p>
+                        <div className="st-chips">
+                            {STARTERS.map((s) => (
+                                <button key={s} className="st-chip" onClick={() => ask(s)}>{s}</button>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
-                <button
-                    className="back-btn"
-                    onClick={() =>
-                        navigate("/dashboard")
-                    }
-                >
-                    Back
+                {messages.map((m, i) => (
+                    <div key={i} className={m.role === "user" ? "st-msg st-msg-user" : "st-msg st-msg-ai"}>
+                        {m.role === "user" ? m.content : <ReactMarkdown>{m.content}</ReactMarkdown>}
+                    </div>
+                ))}
+
+                {loading && (
+                    <div className="st-msg st-msg-ai st-typing" aria-label="Thinking">
+                        <span /><span /><span />
+                    </div>
+                )}
+
+                <div ref={bottomRef} />
+            </div>
+
+            <div className="st-composer">
+                <textarea
+                    rows={1}
+                    placeholder="Ask about this document…"
+                    value={draft}
+                    onChange={(e) => setDraft(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            ask(draft);
+                        }
+                    }}
+                />
+                <button className="li-btn" onClick={() => ask(draft)} disabled={loading || !draft.trim()}>
+                    <Icon name="send" style={{ verticalAlign: "-3px", marginRight: 6 }} />
+                    Send
                 </button>
-
-                <div className="chat-header">
-
-                    <h1>
-                        Chat With PDF
-                    </h1>
-
-                    <p className="chat-file">
-                        {fileName}
-                    </p>
-
-                </div>
-
-                <div className="chat-history">
-
-                    {
-                        messages.map(
-                            (msg, index) => (
-
-                                <div
-                                    key={index}
-                                    className={
-                                        msg.role === "user"
-                                            ?
-                                            "user-message"
-                                            :
-                                            "ai-message"
-                                    }
-                                >
-
-                                    {msg.content}
-
-                                </div>
-
-                            )
-                        )
-                    }
-
-                    {
-                        loading && (
-
-                            <div
-                                className="ai-message"
-                            >
-                                🤖 Thinking...
-                            </div>
-
-                        )
-                    }
-
-                    <div ref={bottomRef}></div>
-
-                </div>
-
-                <div className="chat-input-area">
-
-                    <input
-                        className="chat-input"
-                        placeholder="Ask a question..."
-                        value={question}
-                        onChange={(e) =>
-                            setQuestion(
-                                e.target.value
-                            )
-                        }
-                        onKeyDown={(e) => {
-
-                            if (e.key === "Enter") {
-
-                                handleAsk();
-
-                            }
-
-                        }}
-                    />
-
-                    <button
-                        className="ask-btn"
-                        onClick={handleAsk}
-                        disabled={loading}
-                    >
-                        {
-                            loading
-                                ? "Thinking..."
-                                : "Ask"
-                        }
-                    </button>
-
-                </div>
-
             </div>
 
         </div>
-    )
+    );
+}
 
-}   
+function Chat() {
+
+    // Lifted so the rail's weak-topic buttons can prefill the composer.
+    const [draft, setDraft] = useState("");
+
+    return (
+        <StudyLayout onPickTopic={(topic) => setDraft(`Explain ${topic} with a simple example`)}>
+            {(doc) => <ChatPane key={doc} doc={doc} draft={draft} setDraft={setDraft} />}
+        </StudyLayout>
+    );
+}
 
 export default Chat;

@@ -4,7 +4,8 @@ export const saveQuizResult =
     async (
         fileName,
         score,
-        total
+        total,
+        extra = {}
     ) => {
 
         const response =
@@ -18,7 +19,17 @@ export const saveQuizResult =
                         score,
 
                     total:
-                        total
+                        total,
+
+                    // Optional question-level data that powers the learner state.
+                    answers:
+                        extra.answers,
+
+                    difficulty:
+                        extra.difficulty,
+
+                    mode:
+                        extra.mode
                 }
             );
 

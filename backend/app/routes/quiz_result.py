@@ -43,6 +43,12 @@ def submit_quiz(
 
         request.score,
 
-        request.total
+        request.total,
+
+        request.answers,
+
+        request.difficulty,
+
+        request.mode
 
     )

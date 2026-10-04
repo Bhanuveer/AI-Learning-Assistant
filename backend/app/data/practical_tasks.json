@@ -1,0 +1,513 @@
+{
+  "tasks": [
+    {
+      "id": "py-duplicates",
+      "skill": "Python",
+      "topic": "Python Fundamentals",
+      "difficulty": "easy",
+      "title": "Detect duplicate values",
+      "prompt": "Write a function has_duplicates(items) that returns True if the list contains any repeated value, otherwise False.",
+      "function": "has_duplicates",
+      "starter": "def has_duplicates(items):\n    pass\n",
+      "tests": [
+        [
+          [
+            [
+              1,
+              2,
+              3
+            ]
+          ],
+          false
+        ],
+        [
+          [
+            [
+              1,
+              2,
+              1
+            ]
+          ],
+          true
+        ],
+        [
+          [
+            []
+          ],
+          false
+        ],
+        [
+          [
+            [
+              "a",
+              "b",
+              "a"
+            ]
+          ],
+          true
+        ],
+        [
+          [
+            [
+              5
+            ]
+          ],
+          false
+        ],
+        [
+          [
+            [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ]
+          ],
+          false
+        ]
+      ],
+      "perf_test": {
+        "gen": "range_list",
+        "n": 30000,
+        "expected": false
+      }
+    },
+    {
+      "id": "py-word-freq",
+      "skill": "Python",
+      "topic": "Python Data Structures",
+      "difficulty": "easy",
+      "title": "Word frequency",
+      "prompt": "Write a function word_count(text) that returns a dict mapping each lowercase word to the number of times it appears. Words are separated by whitespace.",
+      "function": "word_count",
+      "starter": "def word_count(text):\n    pass\n",
+      "tests": [
+        [
+          [
+            "a b a"
+          ],
+          {
+            "a": 2,
+            "b": 1
+          }
+        ],
+        [
+          [
+            ""
+          ],
+          {}
+        ],
+        [
+          [
+            "Hello hello HELLO"
+          ],
+          {
+            "hello": 3
+          }
+        ],
+        [
+          [
+            "x  y"
+          ],
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      ]
+    },
+    {
+      "id": "algo-two-sum",
+      "skill": "Algorithms",
+      "topic": "Hashing and Lookup",
+      "difficulty": "medium",
+      "title": "Two sum",
+      "prompt": "Write a function two_sum(nums, target) that returns a list [i, j] of two different indices (i < j) whose values add up to target. Exactly one solution exists.",
+      "function": "two_sum",
+      "starter": "def two_sum(nums, target):\n    pass\n",
+      "tests": [
+        [
+          [
+            [
+              2,
+              7,
+              11,
+              15
+            ],
+            9
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            [
+              3,
+              2,
+              4
+            ],
+            6
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          [
+            [
+              3,
+              3
+            ],
+            6
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            [
+              -1,
+              -2,
+              -3,
+              -4,
+              -5
+            ],
+            -8
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "stat-mean-var",
+      "skill": "Statistics",
+      "topic": "Descriptive Statistics",
+      "difficulty": "easy",
+      "title": "Mean and variance",
+      "prompt": "Write a function mean_variance(values) that returns a tuple (mean, population_variance) for a non-empty list of numbers.",
+      "function": "mean_variance",
+      "starter": "def mean_variance(values):\n    pass\n",
+      "tests": [
+        [
+          [
+            [
+              1,
+              2,
+              3,
+              4
+            ]
+          ],
+          [
+            2.5,
+            1.25
+          ]
+        ],
+        [
+          [
+            [
+              5
+            ]
+          ],
+          [
+            5.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            [
+              2,
+              2,
+              2
+            ]
+          ],
+          [
+            2.0,
+            0.0
+          ]
+        ]
+      ],
+      "float_tolerance": 1e-06
+    },
+    {
+      "id": "ml-accuracy-prf",
+      "skill": "Machine Learning",
+      "topic": "Model Evaluation",
+      "difficulty": "medium",
+      "title": "Precision and recall",
+      "prompt": "Write a function precision_recall(y_true, y_pred) for binary labels (0/1) that returns (precision, recall). If a denominator is zero, return 0.0 for that value.",
+      "function": "precision_recall",
+      "starter": "def precision_recall(y_true, y_pred):\n    pass\n",
+      "tests": [
+        [
+          [
+            [
+              1,
+              0,
+              1,
+              1
+            ],
+            [
+              1,
+              0,
+              0,
+              1
+            ]
+          ],
+          [
+            1.0,
+            0.6666666667
+          ]
+        ],
+        [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              0,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          [
+            0.6666666667,
+            1.0
+          ]
+        ]
+      ],
+      "float_tolerance": 1e-06
+    },
+    {
+      "id": "dl-softmax",
+      "skill": "Deep Learning",
+      "topic": "Backpropagation",
+      "difficulty": "medium",
+      "title": "Numerically stable softmax",
+      "prompt": "Write a function softmax(xs) that returns the softmax of a list of numbers as a list of floats. It must not overflow for large inputs (for example [1000, 1001]).",
+      "function": "softmax",
+      "starter": "import math\n\ndef softmax(xs):\n    pass\n",
+      "tests": [
+        [
+          [
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ],
+        [
+          [
+            [
+              1000,
+              1000
+            ]
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              2,
+              3
+            ]
+          ],
+          [
+            0.0900305732,
+            0.2447284711,
+            0.6652409558
+          ]
+        ]
+      ],
+      "float_tolerance": 1e-06
+    },
+    {
+      "id": "dl-conv1d",
+      "skill": "Deep Learning",
+      "topic": "CNN Fundamentals",
+      "difficulty": "medium",
+      "title": "1-D convolution (CNN building block)",
+      "prompt": "Write a function conv1d(signal, kernel) that applies a 'valid' 1-D cross-correlation (as used in CNN layers, no kernel flipping, stride 1, no padding) and returns the output list. Output length is len(signal) - len(kernel) + 1.",
+      "function": "conv1d",
+      "starter": "def conv1d(signal, kernel):\n    pass\n",
+      "tests": [
+        [
+          [
+            [
+              1,
+              2,
+              3,
+              4
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          [
+            6,
+            9,
+            12
+          ]
+        ],
+        [
+          [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          [
+            2
+          ]
+        ],
+        [
+          [
+            [
+              2,
+              4
+            ],
+            [
+              0.5
+            ]
+          ],
+          [
+            1.0,
+            2.0
+          ]
+        ]
+      ],
+      "float_tolerance": 1e-06
+    },
+    {
+      "id": "nlp-tokenize",
+      "skill": "NLP",
+      "topic": "Text Preprocessing",
+      "difficulty": "easy",
+      "title": "Tokenizer",
+      "prompt": "Write a function tokenize(text) that lowercases the text and returns the list of alphanumeric word tokens, discarding punctuation.",
+      "function": "tokenize",
+      "starter": "import re\n\ndef tokenize(text):\n    pass\n",
+      "tests": [
+        [
+          [
+            "Hello, World!"
+          ],
+          [
+            "hello",
+            "world"
+          ]
+        ],
+        [
+          [
+            ""
+          ],
+          []
+        ],
+        [
+          [
+            "It's 2024."
+          ],
+          [
+            "it",
+            "s",
+            "2024"
+          ]
+        ],
+        [
+          [
+            "A-B c"
+          ],
+          [
+            "a",
+            "b",
+            "c"
+          ]
+        ]
+      ]
+    }
+  ]
+}

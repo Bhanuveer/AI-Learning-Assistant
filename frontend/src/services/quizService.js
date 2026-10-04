@@ -2,7 +2,8 @@ import API from "./api";
 
 export const generateQuiz =
     async (
-        fileName
+        fileName,
+        options = {}
     ) => {
 
         const response =
@@ -10,7 +11,13 @@ export const generateQuiz =
                 "/quiz/",
                 {
                     file_name:
-                        fileName
+                        fileName,
+
+                    difficulty:
+                        options.difficulty,
+
+                    focus_topics:
+                        options.focusTopics
                 }
             );
 

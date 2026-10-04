@@ -1,144 +1,66 @@
 import { useState } from "react";
-import "./Login.css";
-import {Link,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AuthFrame from "../components/AuthFrame";
 import { registerUser } from "../services/authService";
-
 
 function Register() {
 
-    const [name, setName] =
-        useState("");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState({ ok: false, text: "" });
+    const [busy, setBusy] = useState(false);
+    const navigate = useNavigate();
 
-    const [email, setEmail] =
-        useState("");
+    const handleRegister = async (event) => {
 
-    const [password, setPassword] =
-        useState("");
+        event.preventDefault();
+        setBusy(true);
+        setMessage({ ok: false, text: "" });
 
-    const [message, setMessage] =
-        useState("");
+        try {
 
-    const navigate =
-        useNavigate();
+            await registerUser({ name, email, password });
+            setMessage({ ok: true, text: "Account created. Taking you to the login page…" });
+            setTimeout(() => navigate("/"), 1500);
 
-    const handleRegister =
-        async () => {
+        } catch (e) {
 
-            try {
+            setBusy(false);
+            setMessage({ ok: false, text: e?.response?.data?.detail || "Registration failed" });
 
-                await registerUser({
-                    name,
-                    email,
-                    password
-                });
-
-                setMessage(
-                    "Registration Successful"
-                );
-
-                setTimeout(() => {
-                    navigate("/");
-                }, 2000);
-
-            } catch {
-
-                setMessage(
-                    "Registration Failed"
-                );
-
-            }
-
-        };
+        }
+    };
 
     return (
+        <AuthFrame>
+            <form onSubmit={handleRegister}>
+                <h2>Create your account</h2>
+                <p className="li-muted">Your learner profile starts empty and grows with every quiz.</p>
 
-        <div className="login-container">
+                <label htmlFor="name">Name</label>
+                <input id="name" className="li-input" autoComplete="name"
+                    value={name} onChange={(e) => setName(e.target.value)} required />
 
-            <div className="login-card">
+                <label htmlFor="email">Email</label>
+                <input id="email" className="li-input" type="email" autoComplete="email"
+                    value={email} onChange={(e) => setEmail(e.target.value)} required />
 
-                <h1>
-                    Create Account
-                </h1>
+                <label htmlFor="password">Password</label>
+                <input id="password" className="li-input" type="password" autoComplete="new-password"
+                    value={password} onChange={(e) => setPassword(e.target.value)} required />
 
-                <input
-                    className="login-input"
-                    placeholder="Name"
-                    value={name}
-                    onChange={(e) =>
-                        setName(
-                            e.target.value
-                        )
-                    }
-                />
+                {message.text && (
+                    <p className={message.ok ? "li-notice li-mt-12" : "li-error li-mt-12"}>{message.text}</p>
+                )}
 
-                <input
-                    className="login-input"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) =>
-                        setEmail(
-                            e.target.value
-                        )
-                    }
-                />
-
-                <input
-                    className="login-input"
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) =>
-                        setPassword(
-                            e.target.value
-                        )
-                    }
-                />
-
-                {
-                    message && (
-                        <p
-                            style={{
-                                textAlign: "center",
-                                color:
-                                    message.includes(
-                                        "Successful"
-                                    )
-                                        ? "green"
-                                        : "red"
-                            }}
-                        >
-                            {message}
-                        </p>
-                    )
-                }
-
-                <button
-                    className="login-btn"
-                    onClick={
-                        handleRegister
-                    }
-                >
-                    Register
+                <button className="li-btn" type="submit" disabled={busy}>
+                    {busy ? "Creating…" : "Create account"}
                 </button>
 
-                <p
-                    style={{
-                        textAlign: "center",
-                        marginTop: "15px"
-                    }}
-                >
-                    Already have an account?
-
-                    <Link to="/">
-                        Login
-                    </Link>
-
-                </p>
-
-            </div>
-
-        </div>
-
+                <p className="auth-alt">Already registered? <Link to="/">Log in</Link></p>
+            </form>
+        </AuthFrame>
     );
 }
 

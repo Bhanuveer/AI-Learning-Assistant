@@ -2,6 +2,11 @@ from datetime import datetime
 
 from app.database.mongodb import db
 
+from app.services.learner_state_service import (
+    record_question_attempts,
+    refresh_learner_state
+)
+
 
 def save_quiz_result(
 
@@ -11,7 +16,13 @@ def save_quiz_result(
 
     score,
 
-    total
+    total,
+
+    answers=None,
+
+    difficulty=None,
+
+    mode="standard"
 
 ):
 
@@ -19,7 +30,7 @@ def save_quiz_result(
         db["quiz_attempts"]
     )
 
-    quiz_collection.insert_one(
+    inserted = quiz_collection.insert_one(
 
         {
 
@@ -35,12 +46,35 @@ def save_quiz_result(
             "total":
             total,
 
+            "difficulty":
+            difficulty,
+
+            "mode":
+            mode,
+
+            "answers_recorded":
+            bool(answers),
+
             "date":
             datetime.now()
 
         }
 
     )
+
+    if answers:
+
+        record_question_attempts(
+            current_user["email"],
+            file_name,
+            "adaptive" if mode == "adaptive" else "quiz",
+            str(inserted.inserted_id),
+            [a.model_dump() for a in answers]
+        )
+
+        refresh_learner_state(
+            current_user["email"]
+        )
 
     return {
 

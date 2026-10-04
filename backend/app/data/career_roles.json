@@ -1,0 +1,39 @@
+{
+  "_notice": "PROTOTYPE DATASET: hand-written, illustrative skill requirements. Not derived from job postings or any external source.",
+  "skills_catalog": {
+    "Python": {"prerequisites": [], "effort_hours": 12, "project": "Build a command-line data-cleaning tool in Python"},
+    "Statistics": {"prerequisites": [], "effort_hours": 10, "project": "Run and explain a hypothesis test on a public dataset"},
+    "Data Analysis": {"prerequisites": ["Python"], "effort_hours": 10, "project": "Exploratory analysis notebook on a public dataset"},
+    "SQL": {"prerequisites": [], "effort_hours": 8, "project": "Design a small relational schema and write analytical queries"},
+    "Algorithms": {"prerequisites": ["Python"], "effort_hours": 14, "project": "Implement and benchmark five classic algorithms"},
+    "Software Engineering": {"prerequisites": ["Python"], "effort_hours": 14, "project": "Build a tested, version-controlled REST API"},
+    "Machine Learning": {"prerequisites": ["Python", "Statistics"], "effort_hours": 16, "project": "Train and evaluate a classifier end to end"},
+    "Deep Learning": {"prerequisites": ["Machine Learning"], "effort_hours": 20, "project": "CNN image classifier project"},
+    "NLP": {"prerequisites": ["Machine Learning"], "effort_hours": 14, "project": "Text classification pipeline"},
+    "Generative AI": {"prerequisites": ["Deep Learning"], "effort_hours": 12, "project": "Retrieval-augmented question answering app"},
+    "Model Deployment": {"prerequisites": ["Python", "Machine Learning"], "effort_hours": 12, "project": "Serve a trained model behind a REST API"},
+    "MLOps": {"prerequisites": ["Model Deployment"], "effort_hours": 12, "project": "Add experiment tracking and a retraining pipeline to a deployed model"}
+  },
+  "roles": {
+    "AI Engineer": {
+      "description": "Builds applications on top of ML and generative models.",
+      "skills": {"Python": 70, "Machine Learning": 65, "Deep Learning": 65, "NLP": 60, "Generative AI": 60, "Model Deployment": 60}
+    },
+    "ML Engineer": {
+      "description": "Trains, ships and maintains machine learning models.",
+      "skills": {"Python": 70, "Machine Learning": 70, "Statistics": 60, "Deep Learning": 75, "Model Deployment": 70, "MLOps": 55}
+    },
+    "Data Scientist": {
+      "description": "Extracts insight from data with statistics and models.",
+      "skills": {"Python": 70, "Statistics": 70, "Data Analysis": 70, "Machine Learning": 65, "SQL": 60}
+    },
+    "Python Developer": {
+      "description": "Builds back-end software and tooling in Python.",
+      "skills": {"Python": 75, "Algorithms": 60, "Software Engineering": 65, "SQL": 55}
+    },
+    "Software Developer": {
+      "description": "General-purpose software engineering.",
+      "skills": {"Python": 65, "Algorithms": 65, "Software Engineering": 70, "SQL": 55}
+    }
+  }
+}
